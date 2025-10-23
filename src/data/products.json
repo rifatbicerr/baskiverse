@@ -1,0 +1,87 @@
+[
+  {
+    "id": "p001",
+    "title": "Beyaz Baskılı Tişört",
+    "price": 149.99,
+    "oldPrice": 199.99,
+    "image": "https://via.placeholder.com/400x400/FFFFFF/000000?text=Beyaz+Tişört",
+    "category": "Tişörtler",
+    "badges": ["Yeni", "İndirim"],
+    "rating": 4.8,
+    "isNew": true,
+    "description": "Yüksek kaliteli pamuklu kumaştan üretilmiş, özel baskılı tişört."
+  },
+  {
+    "id": "p002",
+    "title": "Siyah Oversize Tişört",
+    "price": 169.99,
+    "image": "https://via.placeholder.com/400x400/000000/FFFFFF?text=Siyah+Tişört",
+    "category": "Tişörtler",
+    "badges": ["Yeni"],
+    "rating": 4.9,
+    "isNew": true,
+    "description": "Rahat kesim, premium kalite oversize tişört."
+  },
+  {
+    "id": "p003",
+    "title": "Özel Tasarım Kupa",
+    "price": 79.99,
+    "oldPrice": 99.99,
+    "image": "https://via.placeholder.com/400x400/FF6B35/FFFFFF?text=Kupa",
+    "category": "Kupalar",
+    "badges": ["İndirim"],
+    "rating": 4.7,
+    "description": "Seramik kupa, bulaşık makinesinde yıkanabilir."
+  },
+  {
+    "id": "p004",
+    "title": "Canvas Bez Çanta",
+    "price": 129.99,
+    "image": "https://via.placeholder.com/400x400/2C3E50/FFFFFF?text=Çanta",
+    "category": "Çantalar",
+    "rating": 4.6,
+    "description": "Dayanıklı canvas kumaş, geniş iç hacim."
+  },
+  {
+    "id": "p005",
+    "title": "A3 Poster Baskı",
+    "price": 89.99,
+    "image": "https://via.placeholder.com/400x400/FF6B35/FFFFFF?text=Poster",
+    "category": "Posterler",
+    "badges": ["Yeni"],
+    "rating": 4.8,
+    "isNew": true,
+    "description": "Mat kuşe kağıt, yüksek çözünürlük baskı."
+  },
+  {
+    "id": "p006",
+    "title": "iPhone 14 Kılıf",
+    "price": 119.99,
+    "oldPrice": 149.99,
+    "image": "https://via.placeholder.com/400x400/000000/FFFFFF?text=Kılıf",
+    "category": "Telefon Kılıfları",
+    "badges": ["İndirim"],
+    "rating": 4.5,
+    "description": "Silikon kılıf, darbe emici yapı."
+  },
+  {
+    "id": "p007",
+    "title": "Gaming Mousepad",
+    "price": 99.99,
+    "image": "https://via.placeholder.com/400x400/2C3E50/FFFFFF?text=Mousepad",
+    "category": "Mousepad",
+    "rating": 4.7,
+    "description": "XL boyut, kaymaz taban, yıkanabilir yüzey."
+  },
+  {
+    "id": "p008",
+    "title": "Deri Ciltli Defter",
+    "price": 159.99,
+    "image": "https://via.placeholder.com/400x400/FF6B35/FFFFFF?text=Defter",
+    "category": "Defterler",
+    "badges": ["Yeni"],
+    "rating": 4.9,
+    "isNew": true,
+    "description": "A5 boyut, 200 sayfa, noktalı sayfa düzeni."
+  }
+]
