@@ -12,10 +12,20 @@ function ProductDetail() {
   const [product, setProduct] = useState(null)
   const [quantity, setQuantity] = useState(1)
   const [thumbsSwiper, setThumbsSwiper] = useState(null)
-  const [selectedSize, setSelectedSize] = useState('M')
+  
+  // Kartvizit seçenekleri
+  const [selectedType, setSelectedType] = useState('Kabartmalı')
+  const [selectedDirection, setSelectedDirection] = useState('Tek Yön')
+  const [selectedQuantity, setSelectedQuantity] = useState('500')
 
-  const sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL']
-  const colors = ['Beyaz', 'Siyah', 'Gri', 'Lacivert']
+  const cardTypes = ['Kabartmalı', 'Mat', 'Parlak', 'Özel Kesim']
+  const directions = ['Tek Yön', 'Çift Yön']
+  const quantities = [
+    { value: '500', label: '500 Adet', price: 450 },
+    { value: '1000', label: '1000 Adet', price: 750 },
+    { value: '2000', label: '2000 Adet', price: 1350 },
+    { value: '5000', label: '5000 Adet', price: 3000 }
+  ]
 
   // Dummy görseller (gerçekte product.images array'i kullanılacak)
   const images = [
@@ -29,6 +39,12 @@ function ProductDetail() {
     const foundProduct = productsData.find(p => p.id === id)
     setProduct(foundProduct)
   }, [id])
+
+  // Seçilen adete göre fiyat hesaplama
+  const getSelectedPrice = () => {
+    const selected = quantities.find(q => q.value === selectedQuantity)
+    return selected ? selected.price : product?.price || 0
+  }
 
   if (!product) {
     return (
@@ -124,57 +140,78 @@ function ProductDetail() {
             </div>
 
             <div className="mb-6">
-              {product.oldPrice && (
-                <span className="text-xl text-gray-400 line-through mr-3">
-                  {product.oldPrice.toFixed(2)} TL
+              <div className="flex items-baseline gap-3">
+                <span className="text-4xl font-bold text-primary">
+                  {getSelectedPrice().toFixed(2)} TL
                 </span>
-              )}
-              <span className="text-4xl font-bold text-primary">
-                {product.price.toFixed(2)} TL
-              </span>
+                <span className="text-sm text-gray-500">+ KDV</span>
+              </div>
             </div>
 
             <p className="text-gray-600 mb-8 leading-relaxed">
               {product.description}
             </p>
 
-            {/* Beden Seçimi */}
+            {/* Kartvizit Türü */}
             <div className="mb-6">
-              <h3 className="font-semibold mb-3">Beden Seçin:</h3>
-              <div className="flex gap-2">
-                {sizes.map((size) => (
+              <h3 className="font-semibold mb-3">Tür:</h3>
+              <div className="grid grid-cols-2 gap-3">
+                {cardTypes.map((type) => (
                   <button
-                    key={size}
-                    onClick={() => setSelectedSize(size)}
-                    className={`w-12 h-12 rounded-lg border-2 font-semibold transition-all ${
-                      selectedSize === size
+                    key={type}
+                    onClick={() => setSelectedType(type)}
+                    className={`px-4 py-3 rounded-lg border-2 font-medium transition-all ${
+                      selectedType === type
                         ? 'border-primary bg-primary text-white'
                         : 'border-gray-300 hover:border-primary'
                     }`}
                   >
-                    {size}
+                    {type}
                   </button>
                 ))}
               </div>
             </div>
 
-            {/* Miktar */}
-            <div className="mb-8">
-              <h3 className="font-semibold mb-3">Miktar:</h3>
-              <div className="flex items-center gap-3">
-                <button
-                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                  className="w-10 h-10 rounded-lg border-2 border-gray-300 hover:border-primary transition-colors"
-                >
-                  -
-                </button>
-                <span className="w-16 text-center font-semibold text-lg">{quantity}</span>
-                <button
-                  onClick={() => setQuantity(quantity + 1)}
-                  className="w-10 h-10 rounded-lg border-2 border-gray-300 hover:border-primary transition-colors"
-                >
-                  +
-                </button>
+            {/* Yön Seçimi */}
+            <div className="mb-6">
+              <h3 className="font-semibold mb-3">Yön:</h3>
+              <div className="grid grid-cols-2 gap-3">
+                {directions.map((direction) => (
+                  <button
+                    key={direction}
+                    onClick={() => setSelectedDirection(direction)}
+                    className={`px-4 py-3 rounded-lg border-2 font-medium transition-all ${
+                      selectedDirection === direction
+                        ? 'border-primary bg-primary text-white'
+                        : 'border-gray-300 hover:border-primary'
+                    }`}
+                  >
+                    {direction}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Adet Seçimi */}
+            <div className="mb-6">
+              <h3 className="font-semibold mb-3">Adet:</h3>
+              <div className="grid grid-cols-2 gap-3">
+                {quantities.map((qty) => (
+                  <button
+                    key={qty.value}
+                    onClick={() => setSelectedQuantity(qty.value)}
+                    className={`px-4 py-3 rounded-lg border-2 font-medium transition-all text-left ${
+                      selectedQuantity === qty.value
+                        ? 'border-primary bg-primary text-white'
+                        : 'border-gray-300 hover:border-primary'
+                    }`}
+                  >
+                    <div className="flex justify-between items-center">
+                      <span>{qty.label}</span>
+                      <span className="text-sm font-bold">{qty.price} TL</span>
+                    </div>
+                  </button>
+                ))}
               </div>
             </div>
 
@@ -192,6 +229,79 @@ function ProductDetail() {
                 </svg>
               </button>
             </div>
+
+            {/* Seçim Özeti */}
+            <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+              <h4 className="font-semibold mb-2 text-sm text-gray-700">Seçimleriniz:</h4>
+              <div className="space-y-1 text-sm text-gray-600">
+                <p><span className="font-medium">Tür:</span> {selectedType}</p>
+                <p><span className="font-medium">Yön:</span> {selectedDirection}</p>
+                <p><span className="font-medium">Adet:</span> {quantities.find(q => q.value === selectedQuantity)?.label}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Ürün Detay Tabs */}
+        <div className="mt-12 bg-white rounded-2xl shadow-lg p-8">
+          <div className="border-b border-gray-200 mb-6">
+            <nav className="flex gap-8">
+              <button className="pb-4 border-b-2 border-primary text-primary font-semibold">
+                Açıklama
+              </button>
+              <button className="pb-4 border-b-2 border-transparent text-gray-600 hover:text-primary transition-colors">
+                Yorumlar (12)
+              </button>
+              <button className="pb-4 border-b-2 border-transparent text-gray-600 hover:text-primary transition-colors">
+                Soru & Cevap
+              </button>
+            </nav>
+          </div>
+
+          <div className="prose max-w-none">
+            <h3 className="text-xl font-bold mb-4">Ürün Açıklaması</h3>
+            <p className="text-gray-600 leading-relaxed mb-4">
+              Profesyonel kartvizitler ile işinizi bir adım öteye taşıyın. Yüksek kaliteli baskı teknolojisi ile 
+              üretilen kartvizitler, markanızı en iyi şekilde temsil eder.
+            </p>
+            <h4 className="font-semibold mb-2">Özellikler:</h4>
+            <ul className="list-disc list-inside space-y-2 text-gray-600">
+              <li>350 gr 1. sınıf kuşe kağıt</li>
+              <li>Profesyonel ofset baskı</li>
+              <li>Hızlı teslimat (2-3 iş günü)</li>
+              <li>Ücretsiz tasarım desteği</li>
+              <li>Çevre dostu baskı teknolojisi</li>
+            </ul>
+            
+            <h4 className="font-semibold mt-6 mb-2">Baskı Türleri:</h4>
+            <div className="space-y-3 text-gray-600">
+              <p><strong>Kabartmalı:</strong> Özel kabartma tekniği ile şık ve profesyonel görünüm</p>
+              <p><strong>Mat:</strong> Klasik ve zarif mat laminasyon</p>
+              <p><strong>Parlak:</strong> Canlı renkler için parlak laminasyon</p>
+              <p><strong>Özel Kesim:</strong> Farklı şekillerde özel kesim seçenekleri</p>
+            </div>
+          </div>
+        </div>
+
+        {/* İlgili Ürünler */}
+        <div className="mt-12">
+          <h2 className="text-2xl font-bold mb-6">Benzer Ürünler</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[1, 2, 3, 4].map((item) => (
+              <div key={item} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow">
+                <div className="aspect-square bg-gray-100">
+                  <img 
+                    src={`https://via.placeholder.com/300x300/FF6B35/FFFFFF?text=Ürün+${item}`} 
+                    alt={`Benzer Ürün ${item}`}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="p-4">
+                  <h3 className="font-semibold mb-2">Kartvizit Modeli {item}</h3>
+                  <p className="text-primary font-bold">450.00 TL</p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
